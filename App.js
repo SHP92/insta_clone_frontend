@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, AsyncStorage, TouchableOpacity } from 'react-native';
+import { StyleSheet, AsyncStorage, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 import { AppLoading } from 'expo';
@@ -12,6 +12,9 @@ import { persistCache } from 'apollo-cache-persist';
 import ApolloClient from 'apollo-boost';
 import { apolloClientOptions } from './apollo';
 import { ApolloProvider } from 'react-apollo-hooks';
+
+import { AuthProvider } from './AuthContext';
+import NavController from './Components/NavController';
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
@@ -56,38 +59,15 @@ export default function App() {
     preLoad()
   }, []);
 
-  // log-in function
-  const setLogin = async () => {
-    try {
-      await AsyncStorage.setItem('loggedIn', 'true');
-      setLoggedIn(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const setLogout = async () => {
-    try {
-      await AsyncStorage.setItem('loggedIn', 'false');
-      setLoggedIn(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    loaded && client && ( loggedIn !== null )? (
+    loaded && client && (loggedIn !== null) ? (
       <ApolloProvider client={client}>
+        <StatusBar hidden/>
         <ThemeProvider theme={theme}>
-          <View style={styles.container}>
-            { loggedIn ? 
-              <TouchableOpacity onPressOut={() => setLogout()}>
-                <Text> i'm in </Text> 
-              </TouchableOpacity>
-              : <TouchableOpacity onPressOut={() => setLogin()}>
-                <Text> i'm out </Text> 
-              </TouchableOpacity> 
-            }
-          </View>
+          {/* Context를 사용하려면 context provider로 감싸줘야함 AuthContet.Provider (AuthProvider) */}
+          <AuthProvider loggedIn={loggedIn}>
+            <NavController />
+          </AuthProvider>
         </ThemeProvider>
       </ApolloProvider>
     ) : (
@@ -95,11 +75,3 @@ export default function App() {
     )
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
