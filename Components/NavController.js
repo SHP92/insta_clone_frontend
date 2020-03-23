@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StyleSheet } from 'react-native';
+import AuthNav from '../Navigation/AuthNav';
 
 export default function NavController(){
     const authContext = useContext(AuthContext);
@@ -13,9 +14,7 @@ export default function NavController(){
                 <TouchableOpacity onPressOut={() => authContext.setLogout()}>
                     <Text> click to logout </Text> 
                 </TouchableOpacity>
-                : <TouchableOpacity onPressOut={() => authContext.setLogin()}>
-                    <Text> click to login </Text> 
-                </TouchableOpacity> 
+                : <AuthNav />
             }
         </View>
     )
@@ -24,7 +23,5 @@ export default function NavController(){
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
     },
   });

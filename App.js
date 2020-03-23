@@ -62,7 +62,7 @@ export default function App() {
   return (
     loaded && client && (loggedIn !== null) ? (
       <ApolloProvider client={client}>
-        <StatusBar hidden/>
+        {/* <StatusBar hidden/> */}
         <ThemeProvider theme={theme}>
           {/* Context를 사용하려면 context provider로 감싸줘야함 AuthContet.Provider (AuthProvider) */}
           <AuthProvider loggedIn={loggedIn}>
