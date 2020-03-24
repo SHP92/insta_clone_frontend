@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import TabNav from './TabNav';
 import PhotoNav from './PhotoNav';
+import MessageNav from './MessageNav';
 
 export default function AuthNav() {
     const Stack = createStackNavigator();
@@ -13,6 +14,7 @@ export default function AuthNav() {
             <Stack.Navigator headerMode='none' mode='modal'>
                 <Stack.Screen name="TabNav" component={TabNav} />
                 <Stack.Screen name="PhotoNav" component={PhotoNav} />
+                <Stack.Screen name="MessageNav" component={MessageNav} />
             </Stack.Navigator>
         </NavigationContainer>
     )

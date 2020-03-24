@@ -6,19 +6,20 @@ import SelectPhoto from '../Screens/Photo/SelectPhoto';
 import TakePhoto from '../Screens/Photo/TakePhoto';
 import UploadPhoto from '../Screens/Photo/UploadPhoto';
 
-const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
-
-function PhotoTab(){
-    return(
-        <Tab.Navigator tabBarPosition='bottom'>
-            <Tab.Screen name="SelectPhoto" component={SelectPhoto} />
-            <Tab.Screen name="TakePhoto" component={TakePhoto} />
-        </Tab.Navigator>
-    )
-}
 
 export default function PhotoNav() {
+  const Tab = createMaterialTopTabNavigator();
+  const Stack = createStackNavigator();
+  
+  const PhotoTab= () => {
+      return(
+          <Tab.Navigator tabBarPosition='bottom'>
+              <Tab.Screen name="SelectPhoto" component={SelectPhoto} />
+              <Tab.Screen name="TakePhoto" component={TakePhoto} />
+          </Tab.Navigator>
+      )
+  }
+  
   return (
     <Stack.Navigator>
       <Stack.Screen name=" " component={PhotoTab}/>
