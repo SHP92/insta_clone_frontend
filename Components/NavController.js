@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import { StyleSheet } from 'react-native';
 import AuthNav from '../Navigation/AuthNav';
-import TabNav from '../Navigation/TabNav';
+import MainNav from '../Navigation/MainNav';
 
 export default function NavController(){
     const authContext = useContext(AuthContext);
@@ -10,7 +10,7 @@ export default function NavController(){
 
     return (
         // authContext.loggedIn ? <TabNav /> : <AuthNav />
-        <TabNav />
+        <MainNav />
     )
 };
 

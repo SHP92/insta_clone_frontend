@@ -12,6 +12,7 @@
     "@react-native-community/async-storage": "^1.8.1",
     "@react-native-community/masked-view": "0.1.5",
     "@react-navigation/bottom-tabs": "^5.2.4",
+    "@react-navigation/material-top-tabs": "^5.1.6",
     "@react-navigation/native": "^5.1.2",
     "@react-navigation/stack": "^5.2.5",
     "apollo-boost": "^0.4.7",
@@ -29,6 +30,7 @@
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
+    "react-native-tab-view": "^2.13.0",
     "react-native-web": "~0.11.7",
     "react-navigation": "^4.3.2",
     "styled-components": "^5.0.1"

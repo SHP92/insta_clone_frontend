@@ -9,18 +9,23 @@ import Notifications from '../Screens/Notifications';
 
 const Tab = createBottomTabNavigator();
 
-export default function TabNav(){
+export default function TabNav({ navigation }){
     return(
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="Home" component={Home} />
-                <Tab.Screen name="Profile" component={Profile} />
-                 {/* add blank(fake) screen using View */}
-                <Tab.Screen name="Add" component={View}/>
-                <Tab.Screen name="Search" component={Search} />
-                <Tab.Screen name="Notifications" component={Notifications} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <Tab.Navigator>
+            <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="Profile" component={Profile} />
+                {/* add blank(fake) screen using View */}
+            <Tab.Screen 
+                name="Add" 
+                component={View} 
+                listeners={{tabPress: e => {
+                    e.preventDefault();
+                    navigation.navigate('PhotoNav');
+                }}}
+            />
+            <Tab.Screen name="Search" component={Search} />
+            <Tab.Screen name="Notifications" component={Notifications} />
+        </Tab.Navigator>
     )
 };
 
