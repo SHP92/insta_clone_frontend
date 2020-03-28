@@ -10,7 +10,7 @@ export default function NavController(){
 
     return (
         // authContext.loggedIn ? <TabNav /> : <AuthNav />
-        <MainNav />
+        <AuthNav />
     )
 };
 

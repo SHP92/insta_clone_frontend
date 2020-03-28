@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import AuthButton from '../../Components/AuthButton';
 
 export default function SignUp(){
     return(
         <View style={styles.container}>
-            <Text> SignUp </Text>
+            
         </View>
     )
 };
