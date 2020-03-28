@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     image: {
-        width: width*0.8,
-        // marginBottom: 20,
+        width: width*0.7,
+        marginBottom: 10,
     },
     button: {
         backgroundColor: theme.blueColor,

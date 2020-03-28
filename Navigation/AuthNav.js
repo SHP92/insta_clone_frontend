@@ -16,7 +16,7 @@ export default function AuthNav() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="AuthHome" headerMode='none'>
                 <Stack.Screen name="AuthHome" component={AuthHome} />
-                <Stack.Screen name="Comfirm" component={Confirm} />
+                <Stack.Screen name="Confirm" component={Confirm} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="SignUp" component={SignUp} />
             </Stack.Navigator>

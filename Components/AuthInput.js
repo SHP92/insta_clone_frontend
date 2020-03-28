@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 import theme from '../theme';
 import { width } from '../Screens/constants';
 
-export default function AuthInput({ placeholder, value, keyboardType='defalut', onChangeText }){
+export default function AuthInput({ 
+    placeholder, value, keyboardType='defalut', onChangeText, returnKeyType='done', onSubmitEditing, autoCorrect=false, autoCapitalize='none'
+    }){
     return(
         <View style={styles.container}>
             <TextInput 
@@ -13,6 +15,10 @@ export default function AuthInput({ placeholder, value, keyboardType='defalut', 
                 keyboardType={keyboardType} 
                 style={styles.input}
                 onChangeText={onChangeText}
+                returnKeyType={returnKeyType}
+                onSubmitEditing={onSubmitEditing}
+                autoCorrect={autoCorrect}
+                autoCapitalize={autoCapitalize}
             >
                 
             </TextInput>
@@ -23,10 +29,18 @@ export default function AuthInput({ placeholder, value, keyboardType='defalut', 
 AuthInput.propTypes = {
     placeholder: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
+    onChangeText: PropTypes.func.isRequired,
+    onSubmitEditing: PropTypes.func,
+    autoCorrect: PropTypes.bool,
+    autoCapitalize: PropTypes.oneOf([
+        'characters', 'none'
+    ]),
     keyboardType: PropTypes.oneOf([
         'default', 'numeric', 'email-address'
     ]),
-    onChangeText: PropTypes.func.isRequired,
+    returnKeyType: PropTypes.oneOf([
+        'done', 'go', 'next', 'search', 'send'
+    ]),
 };
 
 const styles = StyleSheet.create({

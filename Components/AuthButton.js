@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import theme from '../theme';
 import { width, heigth } from '../Screens/constants';
 import PropTypes from 'prop-types';
 
-export default function AuthButton({ text, onPressOut }){
+export default function AuthButton({ text, onPressOut, loading }){
     return (
-        <TouchableOpacity style={styles.button} onPressOut={onPressOut}>
-            <Text style={styles.buttonText}> {text} </Text>
+        <TouchableOpacity style={styles.button} onPressOut={onPressOut} disabled={loading}>
+            {loading ? 
+                <ActivityIndicator color={theme.blueColor}/> 
+                : <Text style={styles.buttonText}> {text} </Text>
+            }
+            
         </TouchableOpacity>
     )
 };
@@ -15,6 +19,7 @@ export default function AuthButton({ text, onPressOut }){
 AuthButton.propTypes = {
     text: PropTypes.string.isRequired,
     onPressOut: PropTypes.func.isRequired,
+    loading: PropTypes.bool,
 }
 
 const styles = StyleSheet.create({
