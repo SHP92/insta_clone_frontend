@@ -31,8 +31,9 @@ export default function Login(){
             setLoading(true);
             const { data: { requestSecret }} = await requestSecretMutation();
             if (requestSecret){
-                navigation.navigate('Confirm');
+                navigation.navigate('Confirm', { email: value });
             } else {
+                navigation.navigate('SignUp', { email: value });
                 return Alert.alert('invalid account');
             }
         } catch (e){
