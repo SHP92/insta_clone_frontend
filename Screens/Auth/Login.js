@@ -7,9 +7,9 @@ import { useMutation } from 'react-apollo-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { LOGIN } from './AuthQueries';
 
-export default function Login(){
+export default function Login({ route }){
     const navigation = useNavigation();
-    const emailInput = useInput('');
+    const emailInput = useInput(route.params?.email ?? '');
     const [loading, setLoading] = useState(false);
     const [requestSecretMutation] = useMutation(LOGIN, {
         variables: {

@@ -23,6 +23,7 @@ export default function App() {
   // null : not check | true : check & login | false : check & logout
 
   const preLoad = async () => {
+    // await AsyncStorage.clear();
     try {
       // preload assets
       await Font.loadAsync({

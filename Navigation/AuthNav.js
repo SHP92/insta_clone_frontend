@@ -13,13 +13,11 @@ export default function AuthNav() {
     const Stack = createStackNavigator();
 
     return(
-        <NavigationContainer>
-            <Stack.Navigator headerMode='none'>
-                <Stack.Screen name="AuthHome" component={AuthHome} />
-                <Stack.Screen name="Confirm" component={Confirm} />
-                <Stack.Screen name="Login" component={Login} />
-                <Stack.Screen name="SignUp" component={SignUp} />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Stack.Navigator headerMode='none'>
+            <Stack.Screen name="AuthHome" component={AuthHome} />
+            <Stack.Screen name="Confirm" component={Confirm} />
+            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+        </Stack.Navigator>
     )
 };
