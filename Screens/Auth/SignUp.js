@@ -9,6 +9,7 @@ import { CREATE_ACCOUNT } from './AuthQueries';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import theme from '../../theme';
 import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
 import key from '../../key';
 
 export default function SignUp({ route }){
@@ -53,17 +54,17 @@ export default function SignUp({ route }){
     };
     const facebookLogin = async() => {
         try {
-          await Facebook.initializeAsync(key.FACEBOOK_KEY);
-          const {
+            await Facebook.initializeAsync(key.FACEBOOK_KEY);
+            const {
             type,
             token,
             expires,
             permissions,
             declinedPermissions,
-          } = await Facebook.logInWithReadPermissionsAsync({
+            } = await Facebook.logInWithReadPermissionsAsync({
             permissions: ['public_profile', 'email'],
-          });
-          if (type === 'success') {
+            });
+            if (type === 'success') {
             setLoading(true);
             const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,last_name,first_name,email`);
             
@@ -75,13 +76,32 @@ export default function SignUp({ route }){
             Alert.alert('Logged in!', `Hi ${first_name}!`);
             setLoading(false);
 
-          } else {
+            } else {
             // type === 'cancel'
-          }
+            }
         } catch ({ message }) {
-          alert(`Facebook Login Error: ${message}`);
+            alert(`Facebook Login Error: ${message}`);
         }
-      }
+    };
+    const googleLogin = async () => {
+        try {
+          const result = await Google.logInAsync({
+            androidClientId: key.GOOGLE_ANDROID_KEY,
+            iosClientId: key.GOOGLE_IOS_KEY,
+            scopes: ['profile', 'email'],
+          });
+      
+          if (result.type === 'success') {
+            let userInfo = await fetch('https://www.googleapis.com/userinfo/v2/me', {
+                headers: { Authorization: `Bearer ${result.accessToken}` },
+            });
+          } else {
+            return { cancelled: true };
+          }
+        } catch (e) {
+          return { error: e };
+        }
+    };
     
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -128,6 +148,7 @@ export default function SignUp({ route }){
 
                 </View>
                 <AuthButton text='connect FACEBOOK' onPressOut={facebookLogin} loading={false} color='#3b5998'/>
+                <AuthButton text='connect GOOGLE' onPressOut={googleLogin} loading={false} color='#DB4437'/>
             </View>
         </TouchableWithoutFeedback>
     )
