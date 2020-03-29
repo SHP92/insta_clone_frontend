@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard, Dimensions } from 'react-native';
 import AuthButton from '../../Components/AuthButton';
 import AuthInput from '../../Components/AuthInput';
 import useInput from '../../Hooks/useInput';
 import { useMutation } from 'react-apollo-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { CREATE_ACCOUNT } from './AuthQueries';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import theme from '../../theme';
+import * as Facebook from 'expo-facebook';
+import key from '../../key';
 
 export default function SignUp({ route }){
     const navigation = useNavigation();
@@ -47,6 +51,37 @@ export default function SignUp({ route }){
             setLoading(false);
         }
     };
+    const facebookLogin = async() => {
+        try {
+          await Facebook.initializeAsync(key.FACEBOOK_KEY);
+          const {
+            type,
+            token,
+            expires,
+            permissions,
+            declinedPermissions,
+          } = await Facebook.logInWithReadPermissionsAsync({
+            permissions: ['public_profile', 'email'],
+          });
+          if (type === 'success') {
+            setLoading(true);
+            const response = await fetch(`https://graph.facebook.com/me?access_token=${token}&fields=id,last_name,first_name,email`);
+            
+            const {first_name, last_name, email } = await response.json();
+            firstNameInput.setValue(first_name);
+            lastNameInput.setValue(last_name);
+            emailInput.setValue(email);
+
+            Alert.alert('Logged in!', `Hi ${first_name}!`);
+            setLoading(false);
+
+          } else {
+            // type === 'cancel'
+          }
+        } catch ({ message }) {
+          alert(`Facebook Login Error: ${message}`);
+        }
+      }
     
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -89,6 +124,10 @@ export default function SignUp({ route }){
                     onSubmitEditing={handleSignup}
                 />
                 <AuthButton text='sign up' onPressOut={handleSignup} loading={loading}/>
+                <View style={styles.line}>
+
+                </View>
+                <AuthButton text='connect FACEBOOK' onPressOut={facebookLogin} loading={false} color='#3b5998'/>
             </View>
         </TouchableWithoutFeedback>
     )
@@ -99,5 +138,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    line: {
+        borderColor: theme.darkGreyColor,
+        borderWidth: 0.5,
+        width: Dimensions.get('screen').width*0.8,
+        marginTop: 30,
+        marginBottom: 40,
     },
   });

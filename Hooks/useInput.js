@@ -5,5 +5,5 @@ export default function useInput(initialValue){
     const onChange = (newValue) => {
         setValue(newValue);
     };
-    return { value, onChange }
+    return { value, onChange, setValue }
 }

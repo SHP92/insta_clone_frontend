@@ -9,10 +9,10 @@ export default function AuthHome({ navigation }){
         <View style={styles.container}>
             <Image source={require('../../assets/logo.png')} style={styles.image} resizeMode='contain'/>
             <View>
-                <TouchableOpacity style={styles.button} onPressOut={() => navigation.navigate('Login')}>
-                    <Text style={styles.buttonText}> login </Text>
+                <AuthButton text='log in' onPressOut={()=>navigation.navigate('Login')}/>
+                <TouchableOpacity style={styles.button} onPressOut={() => navigation.navigate('SignUp')}>
+                    <Text style={styles.buttonText}> create new account </Text>
                 </TouchableOpacity>
-                <AuthButton text='create new account' onPressOut={()=>navigation.navigate('SignUp')}/>
             </View>
         </View>
     )
@@ -30,16 +30,17 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     button: {
-        backgroundColor: theme.blueColor,
+        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
         width: width*0.7,
         borderRadius: 5,
-        marginBottom: 10,
+        borderColor: theme.blueColor,
+        borderWidth: 1,
     },
     buttonText: {
-        color: 'white',
+        color: theme.blueColor,
         fontSize: 20,
     },
   });

@@ -4,11 +4,11 @@ import theme from '../theme';
 import { width, heigth } from '../Screens/constants';
 import PropTypes from 'prop-types';
 
-export default function AuthButton({ text, onPressOut, loading }){
+export default function AuthButton({ text, onPressOut, loading, color=theme.blueColor }){
     return (
-        <TouchableOpacity style={styles.button} onPressOut={onPressOut} disabled={loading}>
+        <TouchableOpacity style={{...styles.button, backgroundColor: color}} onPressOut={onPressOut} disabled={loading}>
             {loading ? 
-                <ActivityIndicator color={theme.blueColor}/> 
+                <ActivityIndicator color='white'/> 
                 : <Text style={styles.buttonText}> {text} </Text>
             }
             
@@ -24,17 +24,15 @@ AuthButton.propTypes = {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: 12,
         width: width*0.7,
         borderRadius: 5,
-        borderColor: theme.blueColor,
-        borderWidth: 1,
+        marginBottom: 10,
     },
     buttonText: {
-        color: theme.blueColor,
+        color: 'white',
         fontSize: 20,
     },
 });
