@@ -40,6 +40,16 @@ export default function App() {
       });
       const client = new ApolloClient({
         cache,
+        request: async operation => {
+          const token = await AsyncStorage.getItem('jwt');
+          return operation.setContext({
+            // 바로 header를 호출하면 처음 mount될때만 불러와지고 refresh가 안되기 떄문에
+            // request 요청 안에 넣어서 매번 동작이 실행될때마다 확인해 줘야함
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+        },
         ...apolloClientOptions
       });
       setClient(client);
