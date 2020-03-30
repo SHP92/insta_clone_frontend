@@ -22,7 +22,7 @@ export default function PhotoNav() {
   
   return (
     <Stack.Navigator>
-      <Stack.Screen name=" " component={PhotoTab}/>
+      <Stack.Screen name="PhotoTab" component={PhotoTab}/>
       <Stack.Screen name="UploadPhoto" component={UploadPhoto} />
     </Stack.Navigator>
   );
