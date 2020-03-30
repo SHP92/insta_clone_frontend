@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 import Loader from '../Components/Loader';
 import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
+import Post from '../Components/Post';
 
 const FEED_QUERY = gql`
     {
@@ -14,6 +15,7 @@ const FEED_QUERY = gql`
                 id
                 avatar
                 name
+                email
             }
             files {
                 id
@@ -27,6 +29,8 @@ const FEED_QUERY = gql`
                 user {
                     id
                     name
+                    avatar
+                    email
                 }
             }
         }
@@ -54,7 +58,7 @@ export default function Home(){
         <FlatList 
             style={styles.container}
             data={data.seeFeed}
-            renderItem={({item})=><Text>{item.id}</Text>}
+            renderItem={({ item })=><Post {...item}/>}
             refreshing={refresh}
             onRefresh={handleRefresh}
         />
@@ -63,7 +67,6 @@ export default function Home(){
 
 const styles = StyleSheet.create({
     container: {
-        padding: 20,
         backgroundColor: 'white',
     },
   });
