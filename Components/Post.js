@@ -143,6 +143,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         fontStyle: 'italic',
         color: theme.darkGreyColor,
+        borderBottomColor: theme.darkGreyColor,
+        borderBottomWidth: 1,
+        paddingBottom: 10,
     },
     caption: {
         flexDirection: 'row',

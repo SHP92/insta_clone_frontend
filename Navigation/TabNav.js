@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,6 +10,7 @@ import Search from '../Screens/Search';
 import Notifications from '../Screens/Notifications';
 import MessageLink from '../Components/MessageLink';
 import theme from '../theme';
+import SearchBar from '../Components/SearchBar';
 
 
 export default function TabNav(){
@@ -46,8 +47,8 @@ export default function TabNav(){
         </Stack.Navigator>
     );
     const SearchStack = () => (
-        <Stack.Navigator screenOptions={{ headerTitleAlign: 'center'}}>
-            <Stack.Screen name='Search' component={Search}/>
+        <Stack.Navigator headerMode='none'>
+            <Stack.Screen name='Search' component={Search} />
         </Stack.Navigator>
     );
     const NotificationsStack = () => (
@@ -82,7 +83,8 @@ export default function TabNav(){
             />
             <Tab.Screen 
                 name="Search" component={SearchStack} 
-                options={{ tabBarIcon: ({focused})=>tabIcon('ios-search', focused ? 'black' : theme.darkGreyColor)}}/>
+                options={{tabBarIcon: ({focused})=>tabIcon('ios-search', focused ? 'black' : theme.darkGreyColor)}}
+            />
             <Tab.Screen 
                 name="Notifications" component={NotificationsStack} 
                 options={{ tabBarIcon: ({focused})=>tabIcon(focused ? 'md-heart' : 'md-heart-empty', focused ? 'black' : theme.darkGreyColor)}}/>
