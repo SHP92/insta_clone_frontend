@@ -6,10 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 export default function SearchBar(value, onChange, onSubmit){
     return(
         <View style={styles.container}>
-            { value === '' ? 
-                <Ionicons name='ios-search' size={20} color={theme.darkGreyColor} style={{paddingHorizontal:5}}/> 
-                : null
-            }
+            <Ionicons name='ios-search' size={20} color={theme.darkGreyColor} style={{paddingHorizontal:5}}/> 
             <TextInput 
                 value={value}
                 onChangeText={onChange}
@@ -29,6 +26,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         width: Dimensions.get('screen').width *0.95,
-        justifyContent: 'center',
+        // justifyContent: 'center',
+        alignItems: 'center',
     },
 });

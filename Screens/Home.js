@@ -9,7 +9,6 @@ const FEED_QUERY = gql`
     {
         seeFeed {
             id
-            loaction
             caption
             user {
                 id

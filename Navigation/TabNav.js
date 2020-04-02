@@ -11,6 +11,7 @@ import Notifications from '../Screens/Notifications';
 import MessageLink from '../Components/MessageLink';
 import theme from '../theme';
 import SearchBar from '../Components/SearchBar';
+import Detail from '../Screens/Detail';
 
 
 export default function TabNav(){
@@ -66,10 +67,10 @@ export default function TabNav(){
             }}
         >
             <Tab.Screen 
-                name="Home" component={HomeStack} 
+                name="HomeStack" component={HomeStack} 
                 options={{ tabBarIcon: ({focused})=>tabIcon('ios-home', focused ? 'black' : theme.darkGreyColor)}} />
             <Tab.Screen 
-                name="Profile" component={ProfileStack} 
+                name="ProfileStack" component={ProfileStack} 
                 options={{ tabBarIcon: ({focused})=>tabIcon('md-person', focused ? 'black' : theme.darkGreyColor)}}/>
                 {/* add blank(fake) screen using View */}
             <Tab.Screen 
@@ -82,16 +83,15 @@ export default function TabNav(){
                 }}}
             />
             <Tab.Screen 
-                name="Search" component={SearchStack} 
+                name="SearchStack" component={SearchStack} 
                 options={{tabBarIcon: ({focused})=>tabIcon('ios-search', focused ? 'black' : theme.darkGreyColor)}}
             />
             <Tab.Screen 
-                name="Notifications" component={NotificationsStack} 
+                name="NotificationsStack" component={NotificationsStack} 
                 options={{ tabBarIcon: ({focused})=>tabIcon(focused ? 'md-heart' : 'md-heart-empty', focused ? 'black' : theme.darkGreyColor)}}/>
         </Tab.Navigator>
     )
 };
-
 
 const styles = StyleSheet.create({
     container: {

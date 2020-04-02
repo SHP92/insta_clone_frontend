@@ -89,7 +89,7 @@ export default function Post(data){
 
 const styles = StyleSheet.create({
     postContainer: {
-
+        backgroundColor: 'white',
     },
     header: {
         flexDirection: 'row',
