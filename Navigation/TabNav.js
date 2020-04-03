@@ -12,6 +12,7 @@ import MessageLink from '../Components/MessageLink';
 import theme from '../theme';
 import SearchBar from '../Components/SearchBar';
 import Detail from '../Screens/Detail';
+import UserDetail from '../Screens/UserDetail';
 
 
 export default function TabNav(){
@@ -42,9 +43,15 @@ export default function TabNav(){
             />
         </Stack.Navigator>
     );
-    const ProfileStack = () => (
+    const ProfileStack = ({route}) => (
         <Stack.Navigator screenOptions={{ headerTitleAlign: 'center'}}>
             <Stack.Screen name='Profile' component={Profile}/>
+            <Stack.Screen 
+                name='UserDetail' component={UserDetail} 
+                options={{
+                    headerTitle:()=><Text style={{fontWeight:'bold', fontSize:20}}>{route.params.params.name}</Text>
+                }}
+            />
         </Stack.Navigator>
     );
     const SearchStack = () => (

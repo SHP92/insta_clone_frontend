@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import SelectPhoto from '../Screens/Photo/SelectPhoto';
 import TakePhoto from '../Screens/Photo/TakePhoto';
 import UploadPhoto from '../Screens/Photo/UploadPhoto';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 export default function PhotoNav() {
@@ -13,10 +14,12 @@ export default function PhotoNav() {
   
   const PhotoTab= () => {
       return(
+        <NavigationContainer independent={true}>
           <Tab.Navigator tabBarPosition='bottom'>
               <Tab.Screen name="SelectPhoto" component={SelectPhoto} />
               <Tab.Screen name="TakePhoto" component={TakePhoto} />
           </Tab.Navigator>
+        </NavigationContainer>
       )
   }
   

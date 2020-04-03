@@ -57,7 +57,7 @@ export default function Home(){
         <FlatList 
             style={styles.container}
             data={data.seeFeed}
-            renderItem={({ item })=><Post {...item}/>}
+            renderItem={({ item })=><Post key={item.id} {...item}/>}
             refreshing={refresh}
             onRefresh={handleRefresh}
         />

@@ -5,6 +5,7 @@ import theme from '../theme';
 import Swiper from 'react-native-swiper';
 import { gql } from 'apollo-boost';
 import { useMutation } from 'react-apollo-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 const TOGGLE_LIKE = gql`
     mutation toggleLike($postId: String!){
@@ -13,7 +14,7 @@ const TOGGLE_LIKE = gql`
 `;
 
 export default function Post(data){
-    // console.log(data)
+    const navigation = useNavigation();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(data.likeCount);
     const [toggleLikeMutation] = useMutation(TOGGLE_LIKE, {
@@ -38,7 +39,19 @@ export default function Post(data){
     return(
         <View style={styles.postContainer} key={data.id}>
             <View style={styles.header}>
-                <TouchableOpacity style={styles.user}>
+                <TouchableOpacity 
+                    style={styles.user} 
+                    onPressOut={()=>navigation.push('Nav', { 
+                        screen: 'ProfileStack',
+                        params: {
+                            screen: 'UserDetail',
+                            params : {
+                                id: data.user.id,
+                                name: data.user.name
+                            }
+                        } 
+                    })}
+                >
                     <Image source={{uri: data.user.avatar}} style={styles.avatar}/>
                     <View style={styles.userInfo}>
                         <Text style={styles.userName}>{data.user.name}</Text>

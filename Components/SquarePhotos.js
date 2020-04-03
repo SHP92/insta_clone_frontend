@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function SquarePhotos({files=[], id}) {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity id={id} onPressOut={()=>navigation.navigate('Nav', {
+        <TouchableOpacity key={id} onPressOut={()=>navigation.push('Nav', {
             screen: 'SearchStack',
             params: {
                 screen: "Search",
