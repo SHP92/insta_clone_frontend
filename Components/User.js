@@ -1,13 +1,36 @@
 import React from 'react';
-import { View, ScrollView, FlatList, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, FlatList, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import theme from '../theme';
 import { Ionicons } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import SquarePhotos from './SquarePhotos';
+import Post from './Post';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function User(data) {
+    const gridPhoto = () => {
+        return(
+            <FlatList
+                style={styles.photoContainer}
+                data={data.posts}
+                renderItem={({item})=><SquarePhotos key={item.id} {...item}/>}
+                numColumns={3}
+            />
+        );
+    };
+    const listPhoto = () => {
+        return (
+            <FlatList
+                style={styles.photoContainer}
+                data={data.posts}
+                renderItem={({item})=><Post key={item.id} {...item}/>}
+                numColumns={3}
+            />
+        );
+    };
+
     return(
         <ScrollView style={styles.container}>
             <View style={styles.header}>
@@ -38,13 +61,13 @@ export default function User(data) {
                     <Tab.Screen 
                         name='grid' component={gridPhoto} 
                         options={{ tabBarIcon:({focused, color})=>(
-                            <Ionicons name='ios-grid' size={27} color={focused ? color : theme.darkGreyColor}/>
+                            <Ionicons name='ios-grid' size={27} color={focused ? color : theme.lightGreyColor}/>
                         )}}
                     />
                     <Tab.Screen 
                         name='list' component={listPhoto}
                         options={{ tabBarIcon:({focused, color})=>(
-                            <Ionicons name='ios-list' size={27} color={focused ? color : theme.darkGreyColor}/>
+                            <Ionicons name='ios-list' size={27} color={focused ? color : theme.lightGreyColor}/>
                         )}}    
                     />
                 </Tab.Navigator>
@@ -53,21 +76,6 @@ export default function User(data) {
     )
 };
 
-const gridPhoto = () => {
-    return(
-        <View>
-            <Text>gridPhoto</Text>
-        </View>
-    );
-};
-
-const listPhoto = () => {
-    return (
-        <View>
-            <Text>listPhoto</Text>
-        </View>
-    );
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -106,5 +114,12 @@ const styles = StyleSheet.create({
     },
     name: {
         fontWeight: 'bold',
+    },
+    gridImage: {
+        width: Dimensions.get('screen').width /3,
+        height: Dimensions.get('screen').height /4,
+    },
+    photoContainer: {
+        backgroundColor: 'white',
     },
 });

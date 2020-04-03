@@ -16,6 +16,12 @@ export default function UserDetail({ route }){
             }
             posts{
                 id
+                user {
+                    id
+                    avatar
+                    name
+                    email
+                }
                 caption
                 files {
                     id
