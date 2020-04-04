@@ -4,15 +4,20 @@ import * as Permissions from 'expo-permissions';
 import * as MediaLibrary from 'expo-media-library';
 import { Camera } from 'expo-camera';
 import Loader from '../../Components/Loader';
+import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import theme from '../../theme';
+import UploadPhoto from './UploadPhoto';
+import { useNavigation } from '@react-navigation/native';
+
+const Stack = createStackNavigator();
 
 export default function TakePhoto(){
     const [loading, setLoading] = useState(true);
     const [hasPermission, setHasPermission] = useState(false);
     const [type, setType] = useState(Camera.Constants.Type.back);
-    const [canTakePhoto, setCanTakePhoto] = useState(true);
     const cameraRef = useRef();
+    const navigation = useNavigation();
 
     const askPermission = async() => {
         try{
@@ -28,15 +33,12 @@ export default function TakePhoto(){
         }
     };
     const takePhotos = async() => {
-        if (!canTakePhoto) return
-
         try {
             const photo = await cameraRef.current.takePictureAsync({});
+            navigation.navigate('takeUploadPhoto', { photo: photo });
             await MediaLibrary.createAssetAsync(photo.uri);
-            setCanTakePhoto(false);
         } catch (e) {
             console.log(e);
-            setCanTakePhoto(true);
         }
     };
 
@@ -44,7 +46,7 @@ export default function TakePhoto(){
         askPermission();
     }, []);
 
-    return(
+    const takePhotoPage = () => (
         loading ? <Loader/> : hasPermission ? 
         <View style={{ flex: 1 }}>
             <Camera style={{ flex: 1 }} type={type} ref={cameraRef}>
@@ -62,11 +64,18 @@ export default function TakePhoto(){
                         <MaterialIcons name='switch-camera' size={30} style={{padding:20, color:'white'}}/>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.buttonContainer} onPressOut={takePhotos} disabled={!canTakePhoto}>
+                <TouchableOpacity style={styles.buttonContainer} onPressOut={takePhotos}>
                     <MaterialCommunityIcons name='circle-slice-8' color='white' size={75}/>
                 </TouchableOpacity>
             </Camera>
         </View> : null
+    );
+
+    return(
+        <Stack.Navigator headerMode='none'>
+            <Stack.Screen name='takePhotoPage' component={takePhotoPage}/>
+            <Stack.Screen name='takeUploadPhoto' component={UploadPhoto}/>
+        </Stack.Navigator>
     )
 };
 
