@@ -5,7 +5,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from 'react-apollo-hooks';
 import Post from '../Components/Post';
 
-const FEED_QUERY = gql`
+export const FEED_QUERY = gql`
     {
         seeFeed {
             id

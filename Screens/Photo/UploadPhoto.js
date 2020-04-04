@@ -1,17 +1,55 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, TextInput, Alert } from 'react-native';
 import axios from 'axios'
+import { gql } from 'apollo-boost';
 import theme from '../../theme';
 import { Feather } from '@expo/vector-icons';
+import { useMutation } from 'react-apollo-hooks';
+import Loader from '../../Components/Loader';
+import Post from '../../Components/Post';
+import { useNavigation, NavigationContainer } from '@react-navigation/native';
+import TabNav from '../../Navigation/TabNav';
+import { FEED_QUERY } from '../Home';
 
 export default function UploadPhoto({ route }){
+    const navigaton = useNavigation();
     const photo = route.params.photo;
-    const [caption, setCaption] = useState('');
-    const [fileUrl, setFileUrl] = useState();
+    const [input, setInput] = useState('');
+    const UPLOAD_MUTATION = gql`mutation uploadPost($caption: String!, $files: [String]){
+        uploadPost(caption: $caption, files: $files){
+            id
+            caption
+            user {
+                id
+                avatar
+                name
+                email
+            }
+            files {
+                id
+                url
+            }
+            likeCount
+            isLiked
+            comments {
+                id
+                text
+                user {
+                    id
+                    name
+                    avatar
+                    email
+                }
+            }
+        }
+    }`;
+    const [uploadMutation] = useMutation(UPLOAD_MUTATION, {
+        refetchQueries: [{ query: FEED_QUERY }]
+    });
 
     const upload = async() => {
-        if (caption === '') {
-            Alert.alert('please fill the caption');
+        if (input === '') {
+            Alert.alert('please fill the input');
         }
 
         const formData = new FormData();
@@ -21,16 +59,28 @@ export default function UploadPhoto({ route }){
             type : photo.filename.split('.')[1].toLowerCase(),
             uri: photo.uri,
         });
+
         try {
             const uploadFile = await axios.post('http://192.168.0.9:4000/api/uploads', formData, {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             });
-            setFileUrl(uploadFile.data.path);
+
+            const { data } = await uploadMutation({
+                variables: {
+                    caption: input,
+                    files: [uploadFile.data.location]
+                }
+            });
+            if (data.uploadPost){
+                // navigaton.navigate('TabNav');
+                Alert.alert('upload success');
+            }
         } catch (e) {
             console.log(e);
             Alert.alert('cannot upload', 'please try later');
+        } finally {
         }
     };
 
@@ -39,9 +89,8 @@ export default function UploadPhoto({ route }){
             <Image source={{uri: photo.uri}} style={styles.image}/>
             <View style={styles.subContainer}>
                 <TextInput 
-                    placeholder='caption' style={styles.input} value={caption} 
-                    onChangeText={(value)=>setCaption(value)}
-                    onSubmitEditing={upload}
+                    placeholder='caption' style={styles.input} value={input} 
+                    onChangeText={(value)=>setInput(value)}
                 />
                 <TouchableOpacity onPressOut={upload}>
                     <View style={styles.button}>
